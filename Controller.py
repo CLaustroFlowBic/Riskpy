@@ -1,18 +1,20 @@
 import pygame 
 import Model 
+import loadData
+from loadData import LoadData
 from EventManager import *
 
 
 class Controller(object):
 
-	def __init__(self, evManager, model):
+	def __init__(self, evManager, model, loadData):
 		
 		self.evManager = evManager
 		evManager.RegisterListener(self)
 		self.model = model
+		self.loadData = loadData
 			
 	def notify(self, event):
-		
 		if isinstance(event, TickEvent):
 			for event in pygame.event.get():
                     # handle window manager closing our window
@@ -25,14 +27,18 @@ class Controller(object):
 					else:
 						# post any other keys to the message queue for everyone else to see
 						self.evManager.Post(InputEvent(event.unicode, None))
-				if event.type == pygame.MOUSEBUTTONDOWN:
-					self.evManager.Post(InputEvent("nigger", None))
+				
 					
 				#if self.model.surface.get_rect().collidepoint(pygame.mouse.get_pos()):
-					
 				pos = pygame.mouse.get_pos()
-				posInMask = pos[0] - self.model.rect.x, pos[1] - self.model.rect.y
-				touching = self.model.rect.collidepoint(*pos) and self.model.mask.get_at(posInMask)
-				if touching:
-					print("Nigger")
+				
+				for territory in self.loadData.Territories:
+					posInMask = pos[0] - territory.get_rect().x, pos[1] - territory.get_rect().y
+					touching = territory.get_rect().collidepoint(*pos) and territory.get_mask().get_at(posInMask)
+					if touching:
+						print(territory.get_name())
+					
+					
+				
+				
 		

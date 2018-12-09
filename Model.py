@@ -12,9 +12,9 @@ class GameEngine(object):
 		evManager.RegisterListener(self)
 		self.running = False
 		
-		self.surface = pygame.image.load("images/Alaska.png")  
+		self.surface = pygame.image.load("images/1_Alaska.png")  
 		self.surface.get_rect(center= (36, 36))
-		self.rect = pygame.image.load("images/Alaska.png").get_rect(center=(36, 36))
+		self.rect = pygame.image.load("images/1_Alaska.png").get_rect(center=(36, 36))
 		self.mask = pygame.mask.from_surface(self.surface)
 		
 	def notify(self, event):

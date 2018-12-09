@@ -1,14 +1,16 @@
 import pygame
 import Model
-
+import loadData
 from EventManager import *
 
 
 class View(object):
 
-	def __init__(self, evManager, model):
+	def __init__(self, evManager, model, loadData):
 
 		self.evManager = evManager
+		
+		self.loadData = loadData
 		evManager.RegisterListener(self)
 		self.model = model
 		self.isinitialized = False
@@ -26,16 +28,22 @@ class View(object):
 		elif isinstance(event, TickEvent):
 			self.renderall()
 			self.clock.tick(30)
-			
+
 	def renderall(self):
-	
+		alx = 100
+		aly = 100
 		if not self.isinitialized:
 			return
 		# clear display
 		self.screen.fill((255,255,255))
 		# draw some words on the screen
 		
-		self.screen.blit(self.model.surface.convert_alpha(), (0,0))
+		for i in self.loadData.Territories:
+			self.screen.blit(i.get_surface(), (i.get_x(), i.get_y()))
+	
+		
+
+		#self.screen.blit(self.model.surface.convert_alpha(), (0,0))
 		# flip the display to show whatever we drew
 		pygame.display.flip()
 			
