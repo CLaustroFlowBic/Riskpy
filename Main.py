@@ -5,6 +5,9 @@ import Controller
 import loadData
 from loadData import LoadData
 
+#problem :
+# loadData is running twice i dont know why 
+
 def run():
 	evManager = EventManager.EventManager()
 	load = loadData.LoadData()

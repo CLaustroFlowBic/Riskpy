@@ -35,7 +35,7 @@ class LoadData(object):
 			if temparray[i][-3:] == "png":
 				self.pngArray.append(temparray[i])
 
-		for i in range(0, len(self.pngArray)-1, 1):
+		for i in range(0, len(self.pngArray), 1):
 			self.Territories.append(self.makeSurfaces(self.pngArray[i], self.xy[i][0], self.xy[i][1]))
 
 		print(self.Territories)
@@ -43,7 +43,8 @@ class LoadData(object):
 	def makeSurfaces(self, name, x, y):
 		
 		surface = pygame.image.load("images/" + name)
-		territory = Territory(surface, surface.get_rect(topleft = (x, y)), pygame.mask.from_surface(surface), name, x, y)
+		territory = Territory(surface, surface.get_rect(topleft = (x, y)), pygame.mask.from_surface(surface, 50), name[2:-4], x, y)
+		print(name)
 		
 		return territory
 	

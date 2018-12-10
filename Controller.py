@@ -35,7 +35,7 @@ class Controller(object):
 				for territory in self.loadData.Territories:
 					posInMask = pos[0] - territory.get_rect().x, pos[1] - territory.get_rect().y
 					touching = territory.get_rect().collidepoint(*pos) and territory.get_mask().get_at(posInMask)
-					if touching:
+					if touching and event.type == pygame.MOUSEBUTTONDOWN:
 						print(territory.get_name())
 					
 					
