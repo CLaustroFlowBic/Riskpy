@@ -9,16 +9,16 @@ from loadData import LoadData
 # loadData is running twice i dont know why 
 
 def run():
-	evManager = EventManager.EventManager()
-	load = loadData.LoadData()
-	gamemodel = Model.GameEngine(evManager)
-	keyboard = Controller.Controller(evManager, gamemodel, load)
-	graphics = View.View(evManager, gamemodel, load)
+    evManager = EventManager.EventManager()
+    load = loadData.LoadData()
+    gamemodel = Model.GameEngine(evManager)
+    keyboard = Controller.Controller(evManager, gamemodel, load)
+    graphics = View.View(evManager, gamemodel, load)
 
-	
-	
-	gamemodel.run()
-	
+
+
+    gamemodel.run()
+
 if __name__ == '__main__':
-	run()
+    run()
 
