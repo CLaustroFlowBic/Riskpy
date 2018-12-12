@@ -14,10 +14,7 @@ class GameEngine(object):
         evManager.RegisterListener(self)
         self.running = False
         
-        self.surface = pygame.image.load("images/1_Alaska.png")  
-        self.surface.get_rect(center= (36, 36))
-        self.rect = pygame.image.load("images/1_Alaska.png").get_rect(center=(36, 36))
-        self.mask = pygame.mask.from_surface(self.surface)
+        
         
     def notify(self, event):
 
@@ -32,3 +29,26 @@ class GameEngine(object):
         while self.running:
             newTick = TickEvent()
             self.evManager.Post(newTick)
+       
+    #VARIABLE
+    # need to have some grid like data structure loaded in so we can check if the player is selecting an adjacent tile
+
+    # Territory CLASS
+    # the model here needs to have all of the territories 
+    #needs to store information about the territories
+    # - what contient, - how many troops, does it need to know which player it is apart of, 
+    # how many armies they give
+    
+    
+    #player CLASS
+    # all need to have data associated with them 
+    # - turn order, - what contients they own, - cards they have
+    
+    #game CLASS
+    # needs to know what phase the game is in, does it need to know the player
+    # - menu, options ( should just extend the menu ), player selection
+    # - put down units phase until last unit
+    # - turn one player one, im guessing
+    #       - recieve units, they decied where to put them
+    #       - preform attacks
+    #       - fortify, which means moving armies form one and only one position, to another adjacent tile

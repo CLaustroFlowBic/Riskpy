@@ -28,7 +28,13 @@ class View(object):
         elif isinstance(event, TickEvent):
             self.renderall()
             self.clock.tick(30)
+        
+        #elif isinstance(event, MenuEvent):
+            #self.menuRender
+    
 
+
+        
     def renderall(self):
         alx = 100
         aly = 100
@@ -41,7 +47,7 @@ class View(object):
         for i in self.loadData.Territories:
             self.screen.blit(i.get_surface(), (i.get_x(), i.get_y()))
 
-        
+        #need to draw the number of units on a certain area
 
         #self.screen.blit(self.model.surface.convert_alpha(), (0,0))
         # flip the display to show whatever we drew
@@ -54,7 +60,7 @@ class View(object):
 
             result = pygame.init()
             pygame.font.init()
-            pygame.display.set_caption('demo game')
+            pygame.display.set_caption('Riskypy')
             self.screen = pygame.display.set_mode((800, 600))
             self.clock = pygame.time.Clock()
             self.smallfont = pygame.font.Font(None, 40)

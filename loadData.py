@@ -27,7 +27,7 @@ class LoadData(object):
         return Territories
     def getpngFilenames(self):
         
-        print(os.listdir("images"))
+        
         temparray = os.listdir("images")
 
 
@@ -38,13 +38,13 @@ class LoadData(object):
         for i in range(0, len(self.pngArray), 1):
             self.Territories.append(self.makeSurfaces(self.pngArray[i], self.xy[i][0], self.xy[i][1]))
 
-        print(self.Territories)
+        
 
     def makeSurfaces(self, name, x, y):
         
         surface = pygame.image.load("images/" + name)
         territory = Territory(surface, surface.get_rect(topleft = (x, y)), pygame.mask.from_surface(surface, 50), name[2:-4], x, y)
-        print(name)
+        
         
         return territory
 
@@ -75,5 +75,4 @@ class Territory(object):
         return self.y
 
 
-a = LoadData()
 
