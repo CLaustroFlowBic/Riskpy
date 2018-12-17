@@ -13,7 +13,7 @@ class GameEngine(object):
         self.evManager = evManager
         evManager.RegisterListener(self)
         self.running = False
-        
+        #make phase and such go here
         
         
     def notify(self, event):
@@ -38,17 +38,46 @@ class GameEngine(object):
     #needs to store information about the territories
     # - what contient, - how many troops, does it need to know which player it is apart of, 
     # how many armies they give
+
+class Territory():
+    def __init__(self):
+        
+        self.id
+        self.name
+        self.continent
+        self.armies
+        self.income
+        
+#player CLASS
+# all need to have data associated with them 
+# - turn order, - what contients they own, - cards they have
+class Player():
+    def __init__(self):
+        self.id
+        self.turnNumber
+        self.color
+        self.continentsOwned = []
+        
+        #potentially split this into different arrays for the differnt cards
+        self.cards = []
+
     
+#game CLASS
+# needs to know what phase the game is in, does it need to know the player
+# - menu, options ( should just extend the menu ), player selection
+# - put down units phase until last unit
+# - turn one player one, im guessing
+#       - recieve units, they decied where to put them
+#       - preform attacks
+#       - fortify, which means moving armies form one and only one position, to another adjacent tile
     
-    #player CLASS
-    # all need to have data associated with them 
-    # - turn order, - what contients they own, - cards they have
-    
-    #game CLASS
-    # needs to know what phase the game is in, does it need to know the player
-    # - menu, options ( should just extend the menu ), player selection
-    # - put down units phase until last unit
-    # - turn one player one, im guessing
-    #       - recieve units, they decied where to put them
-    #       - preform attacks
-    #       - fortify, which means moving armies form one and only one position, to another adjacent tile
+class Game():
+    def __init__(self):
+       self.phase
+        
+        
+        
+        
+        
+        
+        
