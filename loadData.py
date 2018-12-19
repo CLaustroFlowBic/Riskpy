@@ -21,7 +21,19 @@ class LoadData(object):
         #Territory image data
         self.Territories = []
         
+        self.phase = []
+        self.phasePos = [(400, 500), (500, 500), (600, 500)]
+        self.loadButtons()
         self.getpngFilenames()
+        
+        
+    def loadButtons(self):
+        
+        self.phase = [pygame.image.load("buttons/fortify.png"),
+        pygame.image.load("buttons/attack.png"),
+        pygame.image.load("buttons/placing.png")]
+        
+        
         
         
     

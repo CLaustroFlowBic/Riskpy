@@ -17,6 +17,9 @@ class View(object):
         self.screen = None
         self.clock = None
         self.smallfont = None
+    
+        
+    
 
     def notify(self, event):
         if isinstance(event, InitializeEvent):
@@ -44,13 +47,14 @@ class View(object):
         self.screen.fill((255,255,255))
         # draw some words on the screen
         
-        #if statement
-        #if main menu call mainmenu()
-        #
+        
         
         for i in self.loadData.Territories:
             self.screen.blit(i.get_surface(), (i.get_x(), i.get_y()))
-
+            
+        for i in range(0, len(self.loadData.phase), 1):
+            self.screen.blit(self.loadData.phase[i], self.loadData.phasePos[i])
+     
         #need to draw the number of units on a certain area
 
         #self.screen.blit(self.model.surface.convert_alpha(), (0,0))
