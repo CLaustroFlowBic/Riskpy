@@ -33,7 +33,7 @@ class View(object):
             #self.menuRender
     
 
-
+    
         
     def renderall(self):
         alx = 100
@@ -43,6 +43,10 @@ class View(object):
         # clear display
         self.screen.fill((255,255,255))
         # draw some words on the screen
+        
+        #if statement
+        #if main menu call mainmenu()
+        #
         
         for i in self.loadData.Territories:
             self.screen.blit(i.get_surface(), (i.get_x(), i.get_y()))
