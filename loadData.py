@@ -22,7 +22,9 @@ class LoadData(object):
         self.Territories = []
         
         self.phase = []
-        self.phasePos = [(400, 500), (500, 500), (600, 500)]
+        self.phasePos = [(400, 500), (500, 500), (600, 500), (700, 500)]
+    
+        self.nextButton = Button(False, False)
         self.loadButtons()
         self.getpngFilenames()
         
@@ -33,9 +35,9 @@ class LoadData(object):
         pygame.image.load("buttons/attack.png"),
         pygame.image.load("buttons/placing.png")]
         
-        
-        
-        
+        self.nextButton = Button([pygame.image.load("buttons/next.png"),
+        pygame.image.load("buttons/nextrollover.png")],
+        pygame.image.load("buttons/next.png").get_rect(topleft = (700, 500)) )
     
     def get_Territories(self):
         
@@ -64,11 +66,12 @@ class LoadData(object):
         # NOTE: image data (.png's and positions) have previously been sorted
 
     def makeSurfaces(self, name, x, y):
+        """Loads an image from image folder with specified name makes into Territory objects"""
         
         surface = pygame.image.load("images/" + name)
         
         # gets the top left corner of the image starting at the middle
-        #also offset so it doesn't look weird
+        #also offset so it is on the visible area
         x = x - surface.get_width()/2 + 50
         y = y - surface.get_height()/2 + 80
         
@@ -78,7 +81,17 @@ class LoadData(object):
         return territory
 
 
-
+class Button():
+    def __init__(self, surface, rect):
+        self.image = surface
+        self.rect = rect
+        self.rollover = False
+    def get_image(self):
+        return self.image
+    def get_rect(self):
+        return self.rect
+        
+        
 class Territory(object):
     """Territory class contains data: image, position, name , rect, collision/mask"""
     def __init__(self, surface, rect, mask, name, x, y):

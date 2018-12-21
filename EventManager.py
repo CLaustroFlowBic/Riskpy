@@ -32,7 +32,7 @@ class InputEvent(Event):
         
     def __str__(self):
         return '%s, char=%s, clickpos=%s' % (self.name, self.char, self.clickpos)
-    
+
     
     
 class InitializeEvent(Event):

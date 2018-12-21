@@ -18,6 +18,7 @@ class View(object):
         self.clock = None
         self.smallfont = None
     
+       
         
     
 
@@ -31,10 +32,15 @@ class View(object):
         elif isinstance(event, TickEvent):
             self.renderall()
             self.clock.tick(30)
+            
         
         #elif isinstance(event, MenuEvent):
             #self.menuRender
-    
+        
+        
+            
+                
+        
 
     
         
@@ -54,7 +60,8 @@ class View(object):
             
         for i in range(0, len(self.loadData.phase), 1):
             self.screen.blit(self.loadData.phase[i], self.loadData.phasePos[i])
-     
+    
+        self.screen.blit(self.loadData.nextButton.get_image()[self.loadData.nextButton.rollover], self.loadData.phasePos[3])
         #need to draw the number of units on a certain area
 
         #self.screen.blit(self.model.surface.convert_alpha(), (0,0))

@@ -35,7 +35,20 @@ class Controller(object):
                 for territory in self.loadData.Territories:
                     posInMask = pos[0] - territory.get_rect().x, pos[1] - territory.get_rect().y
                     touching = territory.get_rect().collidepoint(*pos) and territory.get_mask().get_at(posInMask)
-                    if touching and event.type == pygame.MOUSEBUTTONDOWN:
+                    if (touching and event.type == pygame.MOUSEBUTTONDOWN):
+                        print(territory.get_name())
+
+
+
+                if (self.loadData.nextButton.get_rect().collidepoint(*pos)):
+
+                    self.model.nextButtonCollide(True)
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                       self.model.nextPhase()
+                else:
+                    self.model.nextButtonCollide(False)
+                
+                    
                         #AESTHETIC
                         #when hovered
                         #glow or outlined when selected 
@@ -53,7 +66,7 @@ class Controller(object):
                         # and this territory must have more than one unit
                         # and clicking on this means that the player wants to attack with this territories armies
                         # after this the player can click on any adjacent tiles
-                        print(territory.get_name())
+                        
                     
                     
                 

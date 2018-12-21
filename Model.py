@@ -1,5 +1,5 @@
 import pygame 	
-
+import loadData
 from EventManager import *
 
 
@@ -8,11 +8,12 @@ from EventManager import *
 #model has the current selection
 class GameEngine(object):
 
-    def __init__(self, evManager):
+    def __init__(self, evManager, loadData):
 
         self.evManager = evManager
         evManager.RegisterListener(self)
         self.running = False
+        self.loadData = loadData
         #make phase and such go here
         
         
@@ -29,6 +30,12 @@ class GameEngine(object):
         while self.running:
             newTick = TickEvent()
             self.evManager.Post(newTick)
+            
+    def nextButtonCollide(self, colliding):
+        self.loadData.nextButton.rollover = colliding
+    def nextPhase(self):
+        print("next Phase")
+        
        
     #VARIABLE
     # need to have some grid like data structure loaded in so we can check if the player is selecting an adjacent tile
@@ -70,10 +77,17 @@ class Player():
 #       - recieve units, they decied where to put them
 #       - preform attacks
 #       - fortify, which means moving armies form one and only one position, to another adjacent tile
-    
-class Game():
-    def __init__(self):
-       self.phase
+
+#lass Phase():
+
+
+#class Fortify(Phase):
+   # def __init__(self):
+   #    self.phase
+#class Attack(Phase):
+
+#class Placing(Phase):
+
         
         
         
