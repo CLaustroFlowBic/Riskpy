@@ -5,8 +5,7 @@ import Controller
 import loadData
 from loadData import LoadData
 
-#problem :
-# loadData is running twice i dont know why 
+
 
 def run():
     evManager = EventManager.EventManager()
@@ -14,7 +13,7 @@ def run():
     #this does not need to be here right now
     load = loadData.LoadData()
 
-    gamemodel = Model.GameEngine(evManager, load)
+    gamemodel = Model.GameEngine(evManager)
     keyboard = Controller.Controller(evManager, gamemodel, load)
     graphics = View.View(evManager, gamemodel, load)
 
