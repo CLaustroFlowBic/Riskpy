@@ -24,9 +24,9 @@ class LoadData(object):
         self.phase = []
         self.phasePos = [(400, 500), (500, 500), (600, 500), (700, 500)]
     
-        self.nextButton = Button(False, False)
+        self.nextButton = None
         
-        self.playButton = Button(False, False)
+        self.playButton = None
         self.title = ""
         self.loadButtons()
         self.getpngFilenames()
@@ -38,17 +38,22 @@ class LoadData(object):
         pygame.image.load("buttons/attack.png"),
         pygame.image.load("buttons/placing.png")]
         self.nextButton = Button(pygame.image.load("buttons/next.png"), 
-                                pygame.image.load("buttons/nextrollover.png"), 
-                                None,
                                 pygame.image.load("buttons/next.png").get_rect(topleft = (700, 500)),
-                                (700, 500)
-        self.nextButton = Button([pygame.image.load("buttons/next.png"),
-        pygame.image.load("buttons/nextrollover.png")],
-        pygame.image.load("buttons/next.png").get_rect(topleft = (700, 500)) )
+                                (700, 500),
+                                pygame.image.load("buttons/nextrollover.png"), 
+                                None)
+       # self.nextButton = Button([pygame.image.load("buttons/next.png"),
+        #pygame.image.load("buttons/nextrollover.png")],
+        #pygame.image.load("buttons/next.png").get_rect(topleft = (700, 500)) )
         
         self.title = pygame.image.load("buttons/Title.png")
-        self.playButton = Button([pygame.image.load("buttons/play.png"), pygame.image.load("buttons/playrollover.png")], 
-        pygame.image.load("buttons/play.png").get_rect(topleft = (270,300)))
+        self.playButton = Button (pygame.image.load("buttons/play.png"),
+                                pygame.image.load("buttons/play.png").get_rect(topleft = (270,300)),
+                                (270, 300),
+                                 pygame.image.load("buttons/playrollover.png"),
+                                 None)
+        #self.playButton = Button([pygame.image.load("buttons/play.png"), pygame.image.load("buttons/playrollover.png")], 
+        #pygame.image.load("buttons/play.png").get_rect(topleft = (270,300)))
     
     def get_Territories(self):
         
@@ -93,10 +98,14 @@ class LoadData(object):
 
 
 class Button():
-    def __init__(self, surface, rolloverImage = None, selectedImage = None, rect, position):
+    def __init__(self, surface, rect, position, rolloverImage = None, selectedImage = None):
     
         #make a redirect to image does not exits
-        self.images = [surface, rolloverImage, selectedImage]
+        self.images = [surface]
+        if rolloverImage != None:
+            self.images.append(rolloverImage)
+        if selectedImage != None:
+            self.images.append(selectedImage)
         self.imageLength = len(self.images)
         self.state = 0
         self.rect = rect
@@ -108,10 +117,10 @@ class Button():
         return self.image
         
     def display(self, screen):
-        screen.blit(self.surface[self.state], self.position)
+        screen.blit(self.images[self.state], self.position)
         
         
-    def collided (self, pos, event, callback)
+    def collision (self, event, pos, callback):
         """Changes image depending on collision state and returns a callback if selected /n callback is optional"""
         
         #Checks if colliding with mouse
@@ -123,7 +132,7 @@ class Button():
             
             #checks mousedown Event 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                
+                print("mousedown")
                 #checks if a selected image exits
                 if self.imageLength >= 3:
                     
@@ -135,7 +144,7 @@ class Button():
                     else:   
                         self.state = 2
                     
-                return callback
+                return callback()
         else:
             if self.state == 2:
                 self.state = 2

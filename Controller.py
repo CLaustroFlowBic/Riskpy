@@ -23,7 +23,7 @@ class Controller(object):
             if (touching and event.type == pygame.MOUSEBUTTONDOWN):
                 print(territory.get_name())
                 
-    def nextPhaseButton(self, event, pos):
+  #  def nextPhaseButton(self, event, pos):
         if (self.loadData.nextButton.get_rect().collidepoint(*pos)):
             
             self.model.nextButtonCollide(True)
@@ -33,7 +33,7 @@ class Controller(object):
             self.model.nextButtonCollide(False)
     
     
-    def playButton(self, event, pos):
+   # def playButton(self, event, pos):
         """Collisions for the Play Button In the Main menu"""
         #make these part of the button class use a callback function
         
@@ -44,7 +44,11 @@ class Controller(object):
         else:
             self.loadData.playButton.rollover = False
             
-            
+    def nextPhase(self):
+        pass
+    def playButton(self):
+        
+        self.model.phase = "gamescreen"
     def notify(self, event):
         if isinstance(event, TickEvent):
             for event in pygame.event.get():
@@ -65,14 +69,16 @@ class Controller(object):
                 if self.model.phase == 'gamescreen':
                 
                     self.territoryCollisons(event, pos)
-                    self.nextPhaseButton(event, pos)
+                    #self.nextPhaseButton(event, pos)
+                    self.loadData.nextButton.collision(event, pos, self.nextPhase)
                 
                 elif self.model.phase == 'playerselect':
                     pass
                 #Main Menu Collisions
                 elif self.model.phase == 'mainmenu':
                     
-                    self.playButton(event, pos)
+                    #self.playButton(event, pos)
+                    self.loadData.playButton.collision(event, pos, self.playButton)
                     #do the button shit collisons for the main menus
                 
 

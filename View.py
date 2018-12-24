@@ -48,13 +48,15 @@ class View(object):
         for i in range(0, len(self.loadData.phase), 1):
             self.screen.blit(self.loadData.phase[i], self.loadData.phasePos[i])
     
-        self.screen.blit(self.loadData.nextButton.get_image()[self.loadData.nextButton.rollover], self.loadData.phasePos[3])
+       # self.screen.blit(self.loadData.nextButton.get_image()[self.loadData.nextButton.rollover], self.loadData.phasePos[3])
+        self.loadData.nextButton.display(self.screen)
         
 
     def mainMenuScreen(self):
         self.screen.fill((0, 0, 0))
         self.screen.blit(self.loadData.title, (100, 100))
-        self.screen.blit(self.loadData.playButton.get_image()[self.loadData.playButton.rollover], (270,300))
+        #self.screen.blit(self.loadData.playButton.get_image()[self.loadData.playButton.rollover], (270,300))
+        self.loadData.playButton.display(self.screen)
 
     def playerSelectScreen(self):
         self.screen.fill((0, 0, 0))
