@@ -13,7 +13,7 @@ def run():
     #this does not need to be here right now
     load = loadData.LoadData()
 
-    gamemodel = Model.GameEngine(evManager)
+    gamemodel = Model.GameEngine(evManager, load)
     keyboard = Controller.Controller(evManager, gamemodel, load)
     graphics = View.View(evManager, gamemodel, load)
 

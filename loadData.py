@@ -25,6 +25,9 @@ class LoadData(object):
         self.phasePos = [(400, 500), (500, 500), (600, 500), (700, 500)]
     
         self.nextButton = Button(False, False)
+        
+        self.playButton = Button(False, False)
+        self.title = ""
         self.loadButtons()
         self.getpngFilenames()
         
@@ -34,10 +37,18 @@ class LoadData(object):
         self.phase = [pygame.image.load("buttons/fortify.png"),
         pygame.image.load("buttons/attack.png"),
         pygame.image.load("buttons/placing.png")]
-        
+        self.nextButton = Button(pygame.image.load("buttons/next.png"), 
+                                pygame.image.load("buttons/nextrollover.png"), 
+                                None,
+                                pygame.image.load("buttons/next.png").get_rect(topleft = (700, 500)),
+                                (700, 500)
         self.nextButton = Button([pygame.image.load("buttons/next.png"),
         pygame.image.load("buttons/nextrollover.png")],
         pygame.image.load("buttons/next.png").get_rect(topleft = (700, 500)) )
+        
+        self.title = pygame.image.load("buttons/Title.png")
+        self.playButton = Button([pygame.image.load("buttons/play.png"), pygame.image.load("buttons/playrollover.png")], 
+        pygame.image.load("buttons/play.png").get_rect(topleft = (270,300)))
     
     def get_Territories(self):
         
@@ -82,12 +93,56 @@ class LoadData(object):
 
 
 class Button():
-    def __init__(self, surface, rect):
-        self.image = surface
+    def __init__(self, surface, rolloverImage = None, selectedImage = None, rect, position):
+    
+        #make a redirect to image does not exits
+        self.images = [surface, rolloverImage, selectedImage]
+        self.imageLength = len(self.images)
+        self.state = 0
         self.rect = rect
-        self.rollover = False
+        
+        self.position = position
+        
+        
     def get_image(self):
         return self.image
+        
+    def display(self, screen):
+        screen.blit(self.surface[self.state], self.position)
+        
+        
+    def collided (self, pos, event, callback)
+        """Changes image depending on collision state and returns a callback if selected /n callback is optional"""
+        
+        #Checks if colliding with mouse
+        if (self.get_rect().collidepoint(*pos)):
+            
+            #checks if a rollover exists
+            if(self.imageLength >= 2):
+                self.state = 1
+            
+            #checks mousedown Event 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                
+                #checks if a selected image exits
+                if self.imageLength >= 3:
+                    
+                    #Checks if already pressed if it is go back to state 0
+                    if self.state == 2:
+                        #change this to one if unselection looks werid
+                        self.state = 0
+                    #if not go to state 3 selected
+                    else:   
+                        self.state = 2
+                    
+                return callback
+        else:
+            if self.state == 2:
+                self.state = 2
+            else:
+                self.state = 0
+    
+    
     def get_rect(self):
         return self.rect
         

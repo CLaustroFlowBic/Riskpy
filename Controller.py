@@ -13,11 +13,42 @@ class Controller(object):
         evManager.RegisterListener(self)
         self.model = model
         self.loadData = loadData
+    
+    def territoryCollisons(self, event, pos):
+        
+        #this block is only called when the game is running and is in on of four states
+        for territory in self.loadData.Territories:
+            posInMask = pos[0] - territory.get_rect().x, pos[1] - territory.get_rect().y
+            touching = territory.get_rect().collidepoint(*pos) and territory.get_mask().get_at(posInMask)
+            if (touching and event.type == pygame.MOUSEBUTTONDOWN):
+                print(territory.get_name())
+                
+    def nextPhaseButton(self, event, pos):
+        if (self.loadData.nextButton.get_rect().collidepoint(*pos)):
+            
+            self.model.nextButtonCollide(True)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                self.model.nextPhase()
+        else:
+            self.model.nextButtonCollide(False)
+    
+    
+    def playButton(self, event, pos):
+        """Collisions for the Play Button In the Main menu"""
+        #make these part of the button class use a callback function
+        
+        if (self.loadData.playButton.get_rect().collidepoint(*pos)):
+            self.loadData.playButton.rollover = True
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                self.model.phase = "playerselect"
+        else:
+            self.loadData.playButton.rollover = False
+            
             
     def notify(self, event):
         if isinstance(event, TickEvent):
             for event in pygame.event.get():
-                    # handle window manager closing our window
+                # handle window manager closing our window
                 if event.type == pygame.QUIT:
                     self.evManager.Post(QuitEvent())
                 # handle key down events
@@ -28,25 +59,26 @@ class Controller(object):
                         # post any other keys to the message queue for everyone else to see
                         self.evManager.Post(InputEvent(event.unicode, None))
                 
-                
-                #if self.model.surface.get_rect().collidepoint(pygame.mouse.get_pos()):
                 pos = pygame.mouse.get_pos()
-                #this block is only called when the game is running and is in on of four states
-                for territory in self.loadData.Territories:
-                    posInMask = pos[0] - territory.get_rect().x, pos[1] - territory.get_rect().y
-                    touching = territory.get_rect().collidepoint(*pos) and territory.get_mask().get_at(posInMask)
-                    if (touching and event.type == pygame.MOUSEBUTTONDOWN):
-                        print(territory.get_name())
+                
+                #Game Screen Collisions
+                if self.model.phase == 'gamescreen':
+                
+                    self.territoryCollisons(event, pos)
+                    self.nextPhaseButton(event, pos)
+                
+                elif self.model.phase == 'playerselect':
+                    pass
+                #Main Menu Collisions
+                elif self.model.phase == 'mainmenu':
+                    
+                    self.playButton(event, pos)
+                    #do the button shit collisons for the main menus
+                
 
 
-
-                if (self.loadData.nextButton.get_rect().collidepoint(*pos)):
-
-                    self.model.nextButtonCollide(True)
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                       self.model.nextPhase()
-                else:
-                    self.model.nextButtonCollide(False)
+    
+                
                 
                     
                         #AESTHETIC

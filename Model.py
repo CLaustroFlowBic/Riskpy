@@ -15,7 +15,7 @@ class GameEngine(object):
         self.running = False
         self.loadData = loadData
         #make phase and such go here
-        
+        self.phase = 'mainmenu'
         
     def notify(self, event):
 
@@ -32,6 +32,7 @@ class GameEngine(object):
             self.evManager.Post(newTick)
             
     def nextButtonCollide(self, colliding):
+        
         self.loadData.nextButton.rollover = colliding
     def nextPhase(self):
         print("next Phase")

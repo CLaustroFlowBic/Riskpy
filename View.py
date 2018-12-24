@@ -39,22 +39,9 @@ class View(object):
         
         
             
-                
-        
-
     
-        
-    def renderall(self):
-        alx = 100
-        aly = 100
-        if not self.isinitialized:
-            return
-        # clear display
-        self.screen.fill((255,255,255))
-        # draw some words on the screen
-        
-        
-        
+    def gameScreen(self):
+        self.screen.fill((255, 255, 255))
         for i in self.loadData.Territories:
             self.screen.blit(i.get_surface(), (i.get_x(), i.get_y()))
             
@@ -62,10 +49,34 @@ class View(object):
             self.screen.blit(self.loadData.phase[i], self.loadData.phasePos[i])
     
         self.screen.blit(self.loadData.nextButton.get_image()[self.loadData.nextButton.rollover], self.loadData.phasePos[3])
-        #need to draw the number of units on a certain area
+        
 
-        #self.screen.blit(self.model.surface.convert_alpha(), (0,0))
-        # flip the display to show whatever we drew
+    def mainMenuScreen(self):
+        self.screen.fill((0, 0, 0))
+        self.screen.blit(self.loadData.title, (100, 100))
+        self.screen.blit(self.loadData.playButton.get_image()[self.loadData.playButton.rollover], (270,300))
+
+    def playerSelectScreen(self):
+        self.screen.fill((0, 0, 0))
+    
+    def renderall(self):
+        alx = 100
+        aly = 100
+        if not self.isinitialized:
+            return
+        # clear display
+        
+        
+        
+        if self.model.phase == 'gamescreen':
+            self.gameScreen()
+            
+        elif self.model.phase == 'playerselect':
+            self.playerSelectScreen()
+            
+        elif self.model.phase == 'mainmenu':
+            self.mainMenuScreen()
+        
         pygame.display.flip()
             
     def initialize(self):
