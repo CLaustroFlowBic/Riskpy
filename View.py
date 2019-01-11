@@ -16,11 +16,7 @@ class View(object):
         self.isinitialized = False
         self.screen = None
         self.clock = None
-        self.smallfont = None
-    
-       
-        
-    
+ 
 
     def notify(self, event):
         if isinstance(event, InitializeEvent):
@@ -48,26 +44,21 @@ class View(object):
         for i in range(0, len(self.loadData.phase), 1):
             self.screen.blit(self.loadData.phase[i], self.loadData.phasePos[i])
     
-       # self.screen.blit(self.loadData.nextButton.get_image()[self.loadData.nextButton.rollover], self.loadData.phasePos[3])
         self.loadData.nextButton.display(self.screen)
         
 
     def mainMenuScreen(self):
         self.screen.fill((0, 0, 0))
         self.screen.blit(self.loadData.title, (100, 100))
-        #self.screen.blit(self.loadData.playButton.get_image()[self.loadData.playButton.rollover], (270,300))
         self.loadData.playButton.display(self.screen)
 
     def playerSelectScreen(self):
         self.screen.fill((0, 0, 0))
     
     def renderall(self):
-        alx = 100
-        aly = 100
+        
         if not self.isinitialized:
             return
-        # clear display
-        
         
         
         if self.model.phase == 'gamescreen':
@@ -88,10 +79,9 @@ class View(object):
 
             result = pygame.init()
             pygame.font.init()
-            pygame.display.set_caption('Riskypy')
+            pygame.display.set_caption('Risk.py')
             self.screen = pygame.display.set_mode((800, 600))
             self.clock = pygame.time.Clock()
-            self.smallfont = pygame.font.Font(None, 40)
             self.isinitialized = True
 
 

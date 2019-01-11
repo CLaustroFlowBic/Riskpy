@@ -3,7 +3,8 @@ import os
 #from os import *
 import json
 
-
+PLACING = 0 
+SELECTING = 1
 #Deals with loading images etc into the game
 class LoadData(object):
 
@@ -37,23 +38,21 @@ class LoadData(object):
         self.phase = [pygame.image.load("buttons/fortify.png"),
         pygame.image.load("buttons/attack.png"),
         pygame.image.load("buttons/placing.png")]
+        
+        self.title = pygame.image.load("buttons/Title.png")
+        
         self.nextButton = Button(pygame.image.load("buttons/next.png"), 
                                 pygame.image.load("buttons/next.png").get_rect(topleft = (700, 500)),
                                 (700, 500),
-                                pygame.image.load("buttons/nextrollover.png"), 
-                                None)
-       # self.nextButton = Button([pygame.image.load("buttons/next.png"),
-        #pygame.image.load("buttons/nextrollover.png")],
-        #pygame.image.load("buttons/next.png").get_rect(topleft = (700, 500)) )
+                                pygame.image.load("buttons/nextrollover.png"))
+       
         
-        self.title = pygame.image.load("buttons/Title.png")
+        
         self.playButton = Button (pygame.image.load("buttons/play.png"),
                                 pygame.image.load("buttons/play.png").get_rect(topleft = (270,300)),
                                 (270, 300),
-                                 pygame.image.load("buttons/playrollover.png"),
-                                 None)
-        #self.playButton = Button([pygame.image.load("buttons/play.png"), pygame.image.load("buttons/playrollover.png")], 
-        #pygame.image.load("buttons/play.png").get_rect(topleft = (270,300)))
+                                 pygame.image.load("buttons/playrollover.png"))
+        
     
     def get_Territories(self):
         
@@ -132,7 +131,7 @@ class Button():
             
             #checks mousedown Event 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                print("mousedown")
+                
                 #checks if a selected image exits
                 if self.imageLength >= 3:
                     
@@ -155,6 +154,31 @@ class Button():
     def get_rect(self):
         return self.rect
         
+class Territory(Button):
+    def __init__(self, image, rect, mask, name, x, y, rolloverImage = None, selectedImage = None):
+        Button.__init__(self, image, rect, (x, y), rolloverImage, selectedImage)
+        self.x = x
+        self.y = y
+        self.surface = surface
+        self.rect = rect
+        self.mask = mask
+        self.name = name
+    
+    def collision(self, context, callback):
+        #placing = 0 
+        #selecing = 1
+    
+        if context == PLACING:
+            #depending on how this happens could be a callback or just return the id
+            return callback
+        if context == SELECTING:
+            pass
+            
+            
+    
+    #needs collison context, either saving into memory and using for something
+    #or placing which means just one pressing on the territory 
+            
         
 class Territory(object):
     """Territory class contains data: image, position, name , rect, collision/mask"""
