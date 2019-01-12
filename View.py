@@ -38,6 +38,8 @@ class View(object):
     
     def gameScreen(self):
         self.screen.fill((255, 255, 255))
+        for i in self.model.players:
+            self.screen.blit(i.surface, i.dest)
         for i in self.loadData.Territories:
             self.screen.blit(i.get_surface(), (i.get_x(), i.get_y()))
             
@@ -45,6 +47,8 @@ class View(object):
             self.screen.blit(self.loadData.phase[i], self.loadData.phasePos[i])
     
         self.loadData.nextButton.display(self.screen)
+        
+        
         
 
     def mainMenuScreen(self):
@@ -54,6 +58,11 @@ class View(object):
 
     def playerSelectScreen(self):
         self.screen.fill((0, 0, 0))
+        
+        for i in self.loadData.playerSelectButtons:
+            i.display(self.screen)
+        self.loadData.nextButton.display(self.screen)
+        
     
     def renderall(self):
         

@@ -13,42 +13,28 @@ class Controller(object):
         evManager.RegisterListener(self)
         self.model = model
         self.loadData = loadData
-    
-    def territoryCollisons(self, event, pos):
-        
-        #this block is only called when the game is running and is in on of four states
-        for territory in self.loadData.Territories:
-            posInMask = pos[0] - territory.get_rect().x, pos[1] - territory.get_rect().y
-            touching = territory.get_rect().collidepoint(*pos) and territory.get_mask().get_at(posInMask)
-            if (touching and event.type == pygame.MOUSEBUTTONDOWN):
-                print(territory.get_name())
-                
-    def nextPhaseButton(self, event, pos):
-        if (self.loadData.nextButton.get_rect().collidepoint(*pos)):
-            
-            self.model.nextButtonCollide(True)
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                self.model.nextPhase()
-        else:
-            self.model.nextButtonCollide(False)
-    
-    
-    def playButton(self, event, pos):
-        """Collisions for the Play Button In the Main menu"""
-        #make these part of the button class use a callback function
-        
-        if (self.loadData.playButton.get_rect().collidepoint(*pos)):
-            self.loadData.playButton.rollover = True
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                self.model.phase = "playerselect"
-        else:
-            self.loadData.playButton.rollover = False
-            
+        self.players = []
+     
     def nextPhase(self):
-        pass
+        """callback for the nextphase button"""
+        self.model.updateTurn()
+    def gameStart(self):
+        if not self.players:
+            print("not today g")
+        else:
+            self.model.getPlayers(self.players)
+            self.model.phase = "gamescreen"
     def playButton(self):
+        """callback for the play butotn on the main screen"""
+        self.model.phase = "playerselect"
+    def playerSelect(self, color):
+        if color in self.players:
+            self.players.remove(color)
+        else:
+            self.players.append(color)
+    def territoryCollision(self, name):
         
-        self.model.phase = "gamescreen"
+        print(name)
         
     def notify(self, event):
         if isinstance(event, TickEvent):
@@ -69,16 +55,22 @@ class Controller(object):
                 #Game Screen Collisions
                 if self.model.phase == 'gamescreen':
                 
-                    self.territoryCollisons(event, pos)
+                    #collisions for all territories
+                    for i in self.loadData.Territories:
+                        i.collision(event,pos, self.territoryCollision, i.name)
                     
+                    #collision for next Phase button
                     self.loadData.nextButton.collision(event, pos, self.nextPhase)
                 
                 elif self.model.phase == 'playerselect':
-                    pass
+                    for i in self.loadData.playerSelectButtons:
+                        i.collision(event, pos, self.playerSelect, i.get_name())
+                    print(self.players)
+                    self.loadData.nextButton.collision(event, pos, self.gameStart)
+                    
                 #Main Menu Collisions
                 elif self.model.phase == 'mainmenu':
-                    
-                    #self.playButton(event, pos)
+
                     self.loadData.playButton.collision(event, pos, self.playButton)
                     
                 
