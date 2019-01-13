@@ -17,12 +17,13 @@ class Controller(object):
      
     def nextPhase(self):
         """callback for the nextphase button"""
-        self.model.updateTurn()
+        self.model.updateGamePhase()
     def gameStart(self):
-        if not self.players:
+        if len(self.players) < 2:
             print("not today g")
         else:
             self.model.getPlayers(self.players)
+            
             self.model.phase = "gamescreen"
     def playButton(self):
         """callback for the play butotn on the main screen"""
@@ -35,6 +36,7 @@ class Controller(object):
     def territoryCollision(self, name):
         
         print(name)
+    
         
     def notify(self, event):
         if isinstance(event, TickEvent):
@@ -54,10 +56,13 @@ class Controller(object):
                 
                 #Game Screen Collisions
                 if self.model.phase == 'gamescreen':
-                
-                    #collisions for all territories
-                    for i in self.loadData.Territories:
-                        i.collision(event,pos, self.territoryCollision, i.name)
+                    
+                    if self.model.gamePhase == 0 :
+                        if self.model.initalPlacement:
+                            
+                            #collisions for all territories
+                            for i in self.loadData.Territories:
+                                i.collision(event,pos, self.model.initalFortify, i.name)
                     
                     #collision for next Phase button
                     self.loadData.nextButton.collision(event, pos, self.nextPhase)
@@ -65,7 +70,7 @@ class Controller(object):
                 elif self.model.phase == 'playerselect':
                     for i in self.loadData.playerSelectButtons:
                         i.collision(event, pos, self.playerSelect, i.get_name())
-                    print(self.players)
+                    
                     self.loadData.nextButton.collision(event, pos, self.gameStart)
                     
                 #Main Menu Collisions

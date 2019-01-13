@@ -24,6 +24,7 @@ class LoadData(object):
         
         self.phase = []
         self.phasePos = [(400, 500), (500, 500), (600, 500), (700, 500)]
+        self.phaseIndicator = None
     
         self.nextButton = None
         
@@ -41,6 +42,7 @@ class LoadData(object):
         self.phase = [pygame.image.load("buttons/fortify.png"),
         pygame.image.load("buttons/attack.png"),
         pygame.image.load("buttons/placing.png")]
+        self.phaseIndicator = pygame.image.load("buttons/selected.png")
         
         self.title = pygame.image.load("buttons/Title.png")
         
@@ -107,6 +109,7 @@ class LoadData(object):
         for i in range(0, len(self.pngArray), 1):
             self.Territories.append(self.makeSurfaces(self.pngArray[i], (self.x[i] - self.x[0]), (self.y[i] - self.y[0])))
 
+    #!Change name to make more descriptive!
     def makeSurfaces(self, name, x, y):
         """Loads an image from image folder with specified name makes into Territory objects"""
         

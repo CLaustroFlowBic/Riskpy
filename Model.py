@@ -19,6 +19,11 @@ class GameEngine(object):
         self.gamePhase = 0 
         self.players = []
         self.turn = 0
+        self.phaseIndictaorPos = (400,500)
+        
+        self.initalPlacement = True
+        self.initalTurns = 0
+        
         
     def notify(self, event):
 
@@ -33,29 +38,53 @@ class GameEngine(object):
         while self.running:
             newTick = TickEvent()
             self.evManager.Post(newTick)
-            
-    def nextButtonCollide(self, colliding):
-        
-        self.loadData.nextButton.rollover = colliding
-    def nextPhase(self):
-        print("next Phase")
-    
+
+
     def getPlayers(self, array):
     
         for i in range(len(array)):
             self.players.append (Player(i+ 1, array[i]))
-            
+        self.initalTurns = 40 - (len(self.players ) - 2 * 5) + len(self.players)
+        
         self.updateTurn()
         
+     
+        
+    def updateGamePhase(self):
+        if self.initalPlacement:
+            self.initalTurns -= 1
+            print(self.initalTurns)
+            if self.initalTurns == 0:
+                self.initalPlacement = False
+            self.updateTurn()
+        else:
+        
+            if self.gamePhase == 2:
+                self.updateTurn()
+                self.gamePhase = 0
+            else:
+                self.gamePhase += 1
+            self.phaseIndictaorPos = (400 + 100 * self.gamePhase, 500)
+            
+        
     def updateTurn(self):
-    
+               
         if self.turn == len(self.players):
             self.turn =1
         else:
             self.turn += 1
         for i in self.players:
             i.updateSelection(self.turn)
-       
+            
+    def initalFortify(self, id):
+        pass
+        #gameTerritory dictionary {"territoyname/id": player, amount of units,  ...}
+        
+        #intital fortify is going to check up to 42 if the current selected territory is in the dictionary
+        #if it is send back and error if it is not then add it to the dictionary as specified 
+        #after 42 it is not going to check if it is IN the territory but if the CURRENT player OWNS that territory
+        
+        
     #VARIABLE
     # need to have some grid like data structure loaded in so we can check if the player is selecting an adjacent tile
 

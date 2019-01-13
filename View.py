@@ -28,13 +28,7 @@ class View(object):
         elif isinstance(event, TickEvent):
             self.renderall()
             self.clock.tick(30)
-            
-        
-        #elif isinstance(event, MenuEvent):
-            #self.menuRender
-        
-        
-            
+
     
     def gameScreen(self):
         self.screen.fill((255, 255, 255))
@@ -47,6 +41,7 @@ class View(object):
             self.screen.blit(self.loadData.phase[i], self.loadData.phasePos[i])
     
         self.loadData.nextButton.display(self.screen)
+        self.screen.blit(self.loadData.phaseIndicator, self.model.phaseIndictaorPos)
         
         
         
