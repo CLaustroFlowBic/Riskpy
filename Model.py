@@ -18,6 +18,8 @@ class GameEngine(object):
         self.phase = 'mainmenu'
         self.gamePhase = 0 
         self.players = []
+        
+        self.gameTerritories = {}
         self.turn = 0
         self.phaseIndictaorPos = (400,500)
         
@@ -43,8 +45,8 @@ class GameEngine(object):
     def getPlayers(self, array):
     
         for i in range(len(array)):
-            self.players.append (Player(i+ 1, array[i]))
-        self.initalTurns = 40 - (len(self.players ) - 2 * 5) + len(self.players)
+            self.players.append (Player(i+ 1, array[i], 40 - ((len(self.players ) - 2) * 5)))
+        self.initalTurns = 40 - ((len(self.players ) - 2) * 5) + len(self.players)
         
         self.updateTurn()
         
@@ -52,11 +54,15 @@ class GameEngine(object):
         
     def updateGamePhase(self):
         if self.initalPlacement:
-            self.initalTurns -= 1
-            print(self.initalTurns)
-            if self.initalTurns == 0:
-                self.initalPlacement = False
-            self.updateTurn()
+            total = 0
+            for i in self.players:
+                total += i.armies
+            print(total)
+            if i == 0:
+                self.intialPlacment = false
+            else:
+                self.updateTurn()
+            
         else:
         
             if self.gamePhase == 2:
@@ -77,7 +83,12 @@ class GameEngine(object):
             i.updateSelection(self.turn)
             
     def initalFortify(self, id):
-        pass
+        
+        if id in self.gameTerritory:
+            print("No g already taken")
+            return
+        else:
+            self.
         #gameTerritory dictionary {"territoyname/id": player, amount of units,  ...}
         
         #intital fortify is going to check up to 42 if the current selected territory is in the dictionary
@@ -107,12 +118,13 @@ class Territory():
 # all need to have data associated with them 
 # - turn order, - what contients they own, - cards they have
 class Player():
-    def __init__(self, id, color):
+    def __init__(self, id, color, armies):
         self.id = id
         self.surface = pygame.Surface((50,50))
         self.dest = (id * 50, 500)
         self.color = self.checkColor(color)
         self.surface.fill(self.color)
+        self.armies = armies
 
         self.continentsOwned = []
         
