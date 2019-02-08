@@ -1,0 +1,13 @@
+Running python in notepad++
+
+To run python in notepad++ 
+
+firstly open you .py file with notepadd ++
+then press f5 to see the run window
+
+you will then have to enter this command
+
+cmd /K cd "$(CURRENT_DIRECTORY)" &&  C:\Python34\python.exe -i "$(FULL_CURRENT_PATH)"
+
+if you do not do this the python script will be in the actual notepad++.exe file
+this is how you get python to run in notepadd ++ or whatever
